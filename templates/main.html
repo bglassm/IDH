@@ -4,14 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Individual by Hand</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <!-- CSS 파일 연결 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- 구글 폰트 연결 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
+    <!-- 헤더 (Header) -->
     <header>
-        <h1>Welcome to Individual by Hand</h1>
+        <nav>
+            <ul>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="logo">
+            <a href="{{ url_for('home') }}">
+                <img src="{{ url_for('static', filename='images/IH_logo.png') }}" alt="Individual by Hand Logo">
+            </a>
+        </div>
+        <button class="order-button">Order</button>
     </header>
-    <section>
-        <p>This is a placeholder for the main page content.</p>
+
+    <!-- 메인 배너 (Main Banner) -->
+    <section class="main-banner">
+        <h1>Elevate Your Experience with Exquisite Leather Craftsmanship</h1>
     </section>
+
+    <!-- 제품 섹션 (Products Section) -->
+    <section id="products" class="products-section">
+        <h2>Products</h2>
+        <div class="product-cards">
+            <div class="product-card">
+                <a href="{{ url_for('category_page', category_name='BAG') }}">
+                    <img src="{{ url_for('static', filename='images/bags.png') }}" alt="Bags">
+                    <p>Bags</p>
+                </a>
+            </div>
+            <div class="product-card">
+                <a href="{{ url_for('category_page', category_name='SLG') }}">
+                    <img src="{{ url_for('static', filename='images/small_goods.png') }}" alt="Small Leather Goods">
+                    <p>Small Leather Goods</p>
+                </a>
+            </div>
+            <div class="product-card">
+                <a href="{{ url_for('category_page', category_name='PP') }}">
+                    <img src="{{ url_for('static', filename='images/pet_accessories.png') }}" alt="Pet Accessories">
+                    <p>Pet Accessories</p>
+                </a>
+            </div>
+        </div>
+        <button class="see-all-button">
+            <a href="{{ url_for('all_products') }}">See all</a>
+        </button>
+    </section>
+        
+    <!-- 소개 섹션 (Introduction Section) -->
+    <section id="about" class="introduction-section">
+        <img src="{{ url_for('static', filename='images/about.png') }}" alt="Workshop">
+        <div class="text">
+            <h2>Individual by Hand</h2>
+            <p>자신만의 제품을 원하는 분을 위한 작업공간 - 오로지 한 사람만을 위해 만듭니다. 모든 제품은 주문제작하며 제품의 크기 및 디테일, 색상, 가죽 등을 고객의 특성에 맞게 개별 제작됩니다.</p>
+            <p>Exquisite leather craftsmanship tailored exclusively for you. We specialize in crafting bespoke leather products, made to order and customized for individuals worldwide. Enjoy our redesigned creations with global shipping available.</p>
+            <button class="learn-more-button">Learn more</button>
+        </div>
+    </section>
+
 </body>
 </html>
