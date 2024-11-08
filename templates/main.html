@@ -21,15 +21,13 @@
             </ul>
         </nav>
         <div class="logo">
-            <a href="{{ url_for('home') }}">
-                <img src="{{ url_for('static', filename='images/IH_logo.png') }}" alt="Individual by Hand Logo">
-            </a>
+            <img src="{{ url_for('static', filename='images/IH_logo.png') }}" alt="Individual by Hand Logo">
         </div>
         <button class="order-button">Order</button>
     </header>
 
     <!-- 메인 배너 (Main Banner) -->
-    <section class="main-banner">
+    <section class="main-banner" style="background-image: url('{{ url_for('static', filename='images/banner.png') }}');">
         <h1>Elevate Your Experience with Exquisite Leather Craftsmanship</h1>
     </section>
 
@@ -38,36 +36,27 @@
         <h2>Products</h2>
         <div class="product-cards">
             <div class="product-card">
-                <a href="{{ url_for('category_page', category_name='BAG') }}">
-                    <img src="{{ url_for('static', filename='images/bags.png') }}" alt="Bags">
-                    <p>Bags</p>
-                </a>
+                <img src="{{ url_for('static', filename='images/bags.png') }}" alt="Bags">
+                <p>Bags</p>
             </div>
             <div class="product-card">
-                <a href="{{ url_for('category_page', category_name='SLG') }}">
-                    <img src="{{ url_for('static', filename='images/small_goods.png') }}" alt="Small Leather Goods">
-                    <p>Small Leather Goods</p>
-                </a>
+                <img src="{{ url_for('static', filename='images/small_goods.png') }}" alt="Small Leather Goods">
+                <p>Small Leather Goods</p>
             </div>
             <div class="product-card">
-                <a href="{{ url_for('category_page', category_name='PP') }}">
-                    <img src="{{ url_for('static', filename='images/pet_accessories.png') }}" alt="Pet Accessories">
-                    <p>Pet Accessories</p>
-                </a>
+                <img src="{{ url_for('static', filename='images/pet_accessories.png') }}" alt="Pet Accessories">
+                <p>Pet Accessories</p>
             </div>
         </div>
-        <button class="see-all-button">
-            <a href="{{ url_for('all_products') }}">See all</a>
-        </button>
     </section>
-        
+
     <!-- 소개 섹션 (Introduction Section) -->
     <section id="about" class="introduction-section">
         <img src="{{ url_for('static', filename='images/about.png') }}" alt="Workshop">
         <div class="text">
             <h2>Individual by Hand</h2>
             <p>자신만의 제품을 원하는 분을 위한 작업공간 - 오로지 한 사람만을 위해 만듭니다. 모든 제품은 주문제작하며 제품의 크기 및 디테일, 색상, 가죽 등을 고객의 특성에 맞게 개별 제작됩니다.</p>
-            <p>Exquisite leather craftsmanship tailored exclusively for you. We specialize in crafting bespoke leather products, made to order and customized for individuals worldwide. Enjoy our redesigned creations with global shipping available.</p>
+            <p>Exquisite leather craftsmanship tailored exclusively for you. We specialize in crafting bespoke leather products, made to order and customized for individuals worldwide.</p>
             <button class="learn-more-button">Learn more</button>
         </div>
     </section>

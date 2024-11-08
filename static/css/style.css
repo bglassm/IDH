@@ -12,14 +12,14 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 60px 40px;
+    padding: 60px 40px; /* 위아래 패딩을 추가하여 헤더의 높이를 늘립니다 */
     background-color: white;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
-    box-sizing: border-box;
+    box-sizing: border-box; /* 패딩이 width에 포함되도록 설정 */
 }
 
 header nav {
@@ -36,9 +36,13 @@ header nav ul {
     padding: 0;
 }
 
+header nav ul li {
+    margin: 0;
+}
+
 header nav ul li a {
-    font-size: 18px;
-    padding: 10px 8px;
+    font-size: 18px; /* 네비게이션 링크의 폰트 크기를 명시적으로 지정 */
+    padding: 10px 8px; /* 내부 여백을 지정하여 버튼 크기를 조정 */
     text-decoration: none;
     color: #333;
     font-weight: 500;
@@ -53,11 +57,11 @@ header .logo {
 }
 
 header .logo img {
-    max-height: 100px;
+    max-height: 120px; /* 로고 이미지의 높이를 조정하여 더 크게 보이도록 합니다 */
 }
 
 header .order-button {
-    font-size: 20px;
+    font-size: 20px; /* 텍스트 크기 */
     padding: 15px 25px;
     background-color: #b5651d;
     color: white;
@@ -66,7 +70,7 @@ header .order-button {
     cursor: pointer;
     flex: 0 0 auto;
     margin-left: auto;
-    margin-right: 80px;
+    margin-right: 80px; /* 우측 여백을 추가하여 화면 밖으로 나가지 않도록 설정 */
 }
 
 header .order-button:hover {
@@ -76,7 +80,7 @@ header .order-button:hover {
 /* 3. 메인 배너(Main Banner) 스타일링 */
 .main-banner {
     position: relative;
-    height: 600px;
+    height: 1000px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -85,7 +89,16 @@ header .order-button:hover {
     font-size: 36px;
     font-weight: bold;
     padding: 20px;
-    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+}
+
+.main-banner h1 {
+    position: relative;
+    z-index: 2; /* 텍스트가 배경 이미지 앞에 위치 */
+    margin: 0;
+    color: white; /* 텍스트 색상을 명확한 하얀색으로 설정 */
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7); /* 텍스트에 더 강한 그림자 적용 */
 }
 
 .main-banner::before {
@@ -95,18 +108,11 @@ header .order-button:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('{{ url_for("static", filename="images/banner.png") }}');
+    background-image: url('{{ url_for('static', filename='images/banner.png') }}');
     background-size: cover;
     background-position: center;
-    filter: brightness(0.8);
-    z-index: 1;
-}
-
-.main-banner h1 {
-    position: relative;
-    z-index: 2;
-    margin: 0;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    filter: brightness(0.5); /* 배경 이미지에만 필터 적용 */
+    z-index: 1; /* 배경 이미지를 텍스트 뒤에 위치시킴 */
 }
 
 /* 4. 제품 섹션(Products Section) 스타일링 */
@@ -132,69 +138,50 @@ header .order-button:hover {
 .product-card {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; /* 카드 내의 텍스트와 이미지를 수평 중앙 정렬 */
+    justify-content: space-between; /* 이미지와 텍스트 사이의 공간을 균등 분배 */
     width: 300px;
-    height: 360px;
+    height: 360px; /* 카드 전체의 높이 설정 */
     text-align: center;
     transition: transform 0.3s;
 }
 
 .product-card img {
-    border-radius: 50%;
-    width: 250px;
-    height: 250px;
-    object-fit: cover;
+    border-radius: 50%; /* 이미지를 원형으로 설정 */
+    width: 300px; /* 기본 고정 너비 */
+    height: 300px; /* 기본 고정 높이 */
+    object-fit: cover; /* 이미지가 원형 프레임에 맞도록 설정 */
     margin-bottom: 15px;
 }
 
-.product-card:hover {
-    transform: scale(1.05);
-}
-
-/* 반응형 디자인 - 작은 화면에서 이미지 크기 줄이기 */
+/* 반응형 디자인 - 작은 화면에서는 이미지 크기 줄이기 */
 @media (max-width: 768px) {
-    header {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 20px;
-    }
-
-    header .logo {
-        position: static;
-        transform: none;
-        margin-bottom: 10px;
-    }
-
     .product-card {
-        width: 200px;
-        height: auto;
+        width: 200px; /* 태블릿 화면에서 카드 전체 너비 조정 */
+        height: auto; /* 높이는 자동 조정 */
     }
-
     .product-card img {
-        width: 150px;
-        height: auto;
-    }
-
-    .see-all-button {
-        padding: 10px 20px;
-        font-size: 16px;
+        width: 150px; /* 태블릿 화면에서 이미지 크기 조정 */
+        height: auto; /* 높이는 비율에 맞게 자동 조정 */
     }
 }
 
 @media (max-width: 480px) {
     .product-card {
-        width: 150px;
+        width: 150px; /* 모바일 화면에서 카드 전체 너비 조정 */
+        height: auto; /* 높이는 자동 조정 */
     }
-
     .product-card img {
-        width: 100px;
-        height: auto;
+        width: 100px; /* 모바일 화면에서 이미지 크기 조정 */
+        height: auto; /* 높이는 비율에 맞게 자동 조정 */
     }
+}
 
-    .see-all-button {
-        padding: 8px 16px;
-        font-size: 14px;
-    }
+.product-card p {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+    margin: 0; /* 텍스트 상하 여백을 제거하여 정렬을 개선 */
 }
 
 .see-all-button {
@@ -206,23 +193,26 @@ header .order-button:hover {
     border-radius: 25px;
     cursor: pointer;
     font-size: 20px;
-    margin-top: 40px;
+    margin-top: 40px; /* 제품 카드와의 간격 */
     text-decoration: none;
 }
 
 .see-all-button a {
     color: white;
     text-decoration: none;
-    display: inline-block;
+    display: inline-block; /* 링크가 버튼 내부에서 버튼의 전체 영역을 차지하도록 */
+    width: 100%; /* 버튼의 전체 너비를 차지하도록 */
+    height: 100%; /* 버튼의 전체 높이를 차지하도록 */
 }
 
 .see-all-button:hover {
     background-color: #9c4e14;
 }
 
+/* 하이퍼링크 밑줄 제거 */
 .product-card a {
     text-decoration: none;
-    color: inherit;
+    color: inherit; /* 기본 텍스트 색상 유지 */
 }
 
 /* 5. 소개 섹션(Introduction Section) 스타일링 */
@@ -232,7 +222,6 @@ header .order-button:hover {
     padding: 80px 40px;
     background-color: #f5f5f5;
     flex-wrap: wrap;
-    text-align: center;
 }
 
 .introduction-section img {
@@ -241,6 +230,10 @@ header .order-button:hover {
     border-radius: 10px;
     margin-right: 40px;
     margin-bottom: 20px;
+}
+
+.introduction-section .text {
+    flex: 1;
 }
 
 .introduction-section h2 {
@@ -260,10 +253,137 @@ header .order-button:hover {
     border: none;
     border-radius: 25px;
     cursor: pointer;
-    font-size: 20px;
     margin-top: 20px;
+    font-size: 20px;
 }
 
 .introduction-section .learn-more-button:hover {
     background-color: #9c4e14;
+}
+
+/* 6. 반응형 디자인 (Responsive Design) */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px 20px; /* 위아래 패딩도 동일하게 늘립니다 */
+    }
+
+    header nav ul {
+        flex-direction: row;
+        justify-content: flex-start;
+    } 
+
+    header .logo {
+        position: static;
+        transform: none;
+        margin-bottom: 10px;
+    }
+
+    header .order-button {
+        align-self: flex-end;
+        padding: 10px 20px;
+    }
+
+    .main-banner {
+        font-size: 24px;
+        height: 400px;
+    }
+
+    .product-card {
+        width: 250px;
+        height: 250px;
+    }
+
+    .introduction-section {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .introduction-section img {
+        margin-right: 0;
+    }
+
+    .introduction-section .text {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .product-card {
+        width: 200px;
+        height: 200px;
+    }
+
+    .see-all-button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+
+    .introduction-section h2 {
+        font-size: 28px;
+    }
+
+    .introduction-section p {
+        font-size: 16px;
+    }
+
+    .learn-more-button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}
+
+/* 7. 제품 페이지 (Product Page) 스타일링 */
+.product-page-section {
+    padding: 160px 40px 100px 40px; /* 패딩으로 헤더와의 간격 조정 */
+    background-color: #f5f5f5;
+    text-align: center;
+}
+
+.product-page-section h2 {
+    font-size: 32px;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+.product-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.product-item {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s;
+    flex: 0 1 auto; /* 카드의 크기를 이미지에 맞게 조정 */
+    max-width: 300px; /* 카드의 최대 너비 설정 */
+}
+
+.product-item img {
+    max-width: 200px; /* 이미지의 최대 너비를 제한하여 과도하게 커지지 않도록 설정 */
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.product-item h3 {
+    font-size: 20px;
+    margin: 10px 0;
+    color: #333;
+}
+
+.product-item p {
+    font-size: 18px;
+    color: #777;
+}
+
+.product-item:hover {
+    transform: scale(1.05);
 }
