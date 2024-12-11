@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Products</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/products.css') }}">
+
+</head>
+<body>
+    <header>
+        <!-- 로고 -->
+        <div class="logo">
+            <a href="{{ url_for('home') }}">
+                <img 
+                    src="{{ url_for('static', filename='images/ih_logo.png') }}" 
+                    alt="Individual by Hand Logo" 
+                    class="logo-img">
+            </a>
+        </div>
+        <!-- 네비게이션 -->
+        <nav>
+            <ul>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <!-- Order 버튼 -->
+        <a href="{{ url_for('show_products', category='all') }}" class="order-button">Order</a>
+    </header>
+    
+
+    <!-- 제품 리스트 섹션 -->
+    <section class="product-list-section">
+        <h1>{{ category }}</h1>
+        <ul class="product-list">
+            {% for product in products %}
+            <li class="product-list-item">
+                <a href="/product/{{ product.model }}">
+                    <div class="product-image">
+                        <img src="{{ url_for('static', filename=product.image_path or 'images/default.png') }}" alt="{{ product.name }}">
+                    </div>
+                    <h3>{{ product.name }} ({{ product.model }})</h3>
+                    <p class="price">{{ "{:,}".format(product.price) }}원</p>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+
+</body>
+</html>

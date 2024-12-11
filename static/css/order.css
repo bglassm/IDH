@@ -1,0 +1,151 @@
+/* 필요 없는 공통 스타일 제거 */
+body {
+    margin: 0;
+    padding-top: 200px; /* 헤더 높이 */
+    background-color: #f5f5f5;
+}
+
+.order-page {
+    margin-top: 0; /* 헤더 공간 확보 */
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.description {
+    text-align: center;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.description hr {
+    margin: 20px auto;
+    border: none;
+    height: 1px;
+    background-color: #ccc;
+}
+
+.order-container {
+    display: flex;
+    gap: 40px;
+}
+
+.product-image {
+    flex: 1;
+    text-align: center;
+}
+
+.product-image img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.product-image h3 {
+    margin-top: 10px;
+}
+
+.order-form {
+    flex: 2;
+}
+
+.order-form fieldset {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.order-form legend {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.order-form label {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.order-form input, 
+.order-form textarea {
+    width: calc(100% - 20px); /* 좌우 여백 추가 */
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.order-form textarea {
+    height: 80px;
+}
+
+.estimate {
+    font-size: 20px; /* 글자 크기 증가 */
+    font-weight: bold; /* 볼드체 */
+    color: black; /* 검정색 */
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+
+.send-order-container {
+    display: flex;
+    justify-content: flex-end; /* 우측 정렬 */
+    margin-top: 20px;
+}
+
+.send-order-container button.order-button,
+.send-order-container a.order-button {
+    font-size: 20px;
+    padding: 15px 25px;
+    background-color: #8b5e34;
+    color: white;
+    border: none;
+    border-radius: 35px; /* 동그란 버튼 */
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.send-order-container button.order-button:hover,
+.send-order-container a.order-button:hover {
+    background-color: #6b4227; /* 호버 시 색상 */
+}
+
+.footer-text {
+    text-align: center;
+    font-size: 16px;
+    color: #333; /* 회색 대신 진한 글씨 */
+    margin-top: 20px;
+    margin-bottom: 20px;
+    line-height: 1.5; /* 줄 간격 */
+}
+
+.footer-divider {
+    margin: 20px auto;
+    border: none;
+    height: 1px;
+    background-color: #ccc;
+    width: 100%;
+}
+
+.order-divider {
+    margin: 40px auto;
+    height: 1px;
+    background-color: #ccc;
+    width: 100%;
+}
+
+.elegant-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; /* 적절한 크기로 조정 */
+    font-weight: 700; /* 굵기 조정 */
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px; /* 아래 여백 */
+}

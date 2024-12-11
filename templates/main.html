@@ -4,13 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Individual by Hand</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- 헤더 (Header) -->
     <header>
+        <!-- 로고 -->
+        <div class="logo">
+            <a href="{{ url_for('home') }}">
+                <img 
+                    src="{{ url_for('static', filename='images/ih_logo.png') }}" 
+                    alt="Individual by Hand Logo" 
+                    class="logo-img">
+            </a>
+        </div>
+        <!-- 네비게이션 -->
         <nav>
             <ul>
                 <li><a href="#products">Products</a></li>
@@ -18,16 +28,15 @@
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
-        <div class="logo">
-            <a href="{{ url_for('home') }}"> <!-- 로고 클릭 시 홈으로 이동 -->
-                <img src="{{ url_for('static', filename='images/IH_logo.png') }}" alt="Individual by Hand Logo">
-            </a>
-        </div>
-        <button class="order-button">Order</button>
+        <!-- Order 버튼 -->
+        <a href="{{ url_for('show_products', category='all') }}" class="order-button">Order</a>
     </header>
+    
+
 
     <!-- 메인 배너 (Main Banner) -->
-    <section class="main-banner">
+    <section class="main-banner" style="background-image: url('{{ url_for('static', filename='images/banner.png') }}');">
+        <div class="overlay"></div> <!-- 투명 레이어 추가 -->
         <h1>Elevate Your Experience with Exquisite Leather Craftsmanship</h1>
     </section>
 
@@ -36,26 +45,26 @@
         <h2>Products</h2>
         <div class="product-cards">
             <div class="product-card">
-                <a href="#bags"> <!-- 링크 설정 -->
+                <a href="{{ url_for('show_products', category='bags') }}">
                     <img src="{{ url_for('static', filename='images/bags.png') }}" alt="Bags">
                     <p>Bags</p>
                 </a>
             </div>
             <div class="product-card">
-                <a href="#small-leather-goods"> <!-- 링크 설정 -->
+                <a href="{{ url_for('show_products', category='small leather goods') }}">
                     <img src="{{ url_for('static', filename='images/small_goods.png') }}" alt="Small Leather Goods">
                     <p>Small Leather Goods</p>
                 </a>
             </div>
             <div class="product-card">
-                <a href="#pet-accessories"> <!-- 링크 설정 -->
+                <a href="{{ url_for('show_products', category='pet accessories') }}">
                     <img src="{{ url_for('static', filename='images/pet_accessories.png') }}" alt="Pet Accessories">
                     <p>Pet Accessories</p>
                 </a>
             </div>
         </div>
-        <button class="see-all-button"> <!-- See all 버튼 추가 -->
-            <a href="#all-products">See all</a>
+        <button class="see-all-button">
+            <a href="{{ url_for('show_products', category='all') }}">See all</a>
         </button>
     </section>
 
@@ -69,6 +78,42 @@
             <button class="learn-more-button">Learn more</button>
         </div>
     </section>
+    
+    
+    <!-- contact 섹션 (Contact Section) -->
+    <section id="contact" class="contact-section">
+        <div class="contact-container">
+            <!-- 좌측 설명 -->
+            <div class="contact-description">
+                <h2>Contact</h2>
+                <p>
+                    좀 더 특별한 제품을 원하시나요?<br>
+                    특별한 협업, 수업, 프로젝트를 계획 중이신가요?<br>
+                    궁금한 점이나 원하는 아이디어를 나누어주세요.<br>
+                    Individual by Hand는 최고의 결과를 위한 준비가 되어있습니다.<br>
+                </p>
+            </div>
+    
+            <!-- 우측 폼 -->
+            <div class="contact-form">
+                <form method="POST" action="/contact_submit">
+                    <label for="first-name">이름</label>
+                    <div class="name-fields">
+                        <input type="text" id="first-name" name="first_name" placeholder="성" required>
+                        <input type="text" id="last-name" name="last_name" placeholder="이름" required>
+                    </div>
+                    <label for="email">이메일</label>
+                    <input type="email" id="email" name="email" placeholder="example@email.com" required>
+                    
+                    <label for="message">메시지</label>
+                    <textarea id="message" name="message" placeholder="원하시는 내용을 작성해주세요" required></textarea>
+    
+                    <button type="submit" class="send-button">Send</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
 
 </body>
 </html>

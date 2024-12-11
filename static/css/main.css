@@ -1,0 +1,311 @@
+.main-banner {
+    position: relative;
+    height: 1000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    font-size: 36px;
+    font-weight: bold;
+    padding: 20px;
+    background-size: cover;
+    background-position: center;
+}
+
+.main-banner h1 {
+    position: relative;
+    z-index: 2;
+    margin: 0;
+    color: white;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+}
+
+.main-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* 배경 어둡게 */
+    z-index: 1;
+}
+
+.main-banner .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0); /* 투명 */
+    z-index: 3; /* 텍스트 위에 위치하도록 설정 */
+    pointer-events: all; /* 마우스 이벤트가 이 레이어에만 적용되도록 설정 */
+}
+
+/* 4. 제품 섹션(Products Section) 스타일링 */
+.products-section {
+    padding: 140px 40px 50px 40px;
+    background-color: white;
+    text-align: center;
+}
+
+.products-section h2 {
+    font-size: 32px;
+    margin-bottom: 50px;
+}
+
+.product-cards {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-bottom: 80px;
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 320px; /* 이미지 크기 증가 */
+    height: 380px;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.product-card img {
+    border-radius: 50%;
+    width: 320px;
+    height: 320px;
+    object-fit: cover;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.product-card:hover img {
+    transform: scale(1.1); /* 호버 시 이미지 확대 */
+}
+
+.product-card p {
+    font-size: 20px;
+    font-weight: 500;
+    color: #333;
+    margin: 0;
+}
+
+/* See all 버튼 스타일링 */
+.see-all-button {
+    display: inline-block;
+    background-color: #8b5e34;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 20px;
+    margin-top: 40px;
+    text-decoration: none;
+}
+
+.see-all-button a {
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+.see-all-button:hover {
+    background-color: #8b5e34;
+}
+
+/* 하이퍼링크 밑줄 제거 */
+.product-card a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 5. 소개 섹션(Introduction Section) 스타일링 */
+.introduction-section {
+    display: flex;
+    align-items: center;
+    padding: 80px 40px;
+    background-color: #f5f5f5;
+    flex-wrap: wrap;
+}
+
+.introduction-section img {
+    width: 100%;
+    max-width: 800px;
+    border-radius: 10px;
+    margin-right: 40px;
+    margin-bottom: 20px;
+}
+
+.introduction-section .text {
+    flex: 1;
+}
+
+.introduction-section h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.introduction-section p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.introduction-section .learn-more-button {
+    background-color: #8b5e34;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+.introduction-section .learn-more-button:hover {
+    background-color: #8b5e34;
+}
+
+/* 6. 반응형 디자인 */
+@media (max-width: 768px) {
+    .product-card {
+        width: 250px;
+        height: auto;
+    }
+    .product-card img {
+        width: 250px;
+        height: 250px;
+    }
+
+    /* 헤더 반응형 스타일 - 태블릿 */
+    header {
+        padding: 40px 20px;
+    }
+
+    header .logo img {
+        max-height: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    .product-card {
+        width: 200px;
+        height: auto;
+    }
+    .product-card img {
+        width: 200px;
+        height: 200px;
+    }
+
+    /* 헤더 반응형 스타일 - 모바일 */
+    header {
+        padding: 20px 10px;
+    }
+
+    header .logo img {
+        max-height: 60px;
+    }
+}
+
+/* Contact 섹션 */
+.contact-section {
+    padding: 80px 40px;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.contact-description {
+    flex: 1;
+    max-width: 50%;
+    text-align: left;
+}
+
+.contact-description h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.contact-description p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #555;
+}
+
+.contact-form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-form label {
+    font-weight: 500;
+    margin: 10px 0 5px;
+    color: #333;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: #aaa;
+}
+
+.name-fields {
+    display: flex;
+    gap: 10px;
+}
+
+.name-fields input {
+    flex: 1;
+}
+
+.contact-form textarea {
+    height: 150px;
+    resize: none;
+}
+
+.send-button {
+    background-color: #8b5e34;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 15px;
+    align-self: flex-start;
+}
+
+.send-button:hover {
+    background-color: #6b4227;
+}

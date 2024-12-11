@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/order.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 헤더 -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="logo">
+            <a href="{{ url_for('home') }}">
+                <img src="{{ url_for('static', filename='images/ih_logo.png') }}" alt="Individual by Hand Logo">
+            </a>
+        </div>
+        <a href="{{ url_for('show_products', category='all') }}" class="order-button">Order</a>
+    </header>
+
+    <!-- 메인 페이지 -->
+    <main class="order-page">
+        <!-- 안내문 -->
+        <div class="elegant-heading">
+            Elevate Your Experience with Exquisite Leather Craftsmanship
+        </div>
+        <section class="description">
+            <p>
+                Individual by hand의 모든 제품은 이탈리아, 프랑스 등 유럽 산 최고 품질의 가죽만을 사용합니다.<br>
+                제작 전과정은 수제작으로 이루어지며, 가죽 표면은 모두 핸드스티치로 작업합니다.<br>
+                새로 제작되는 제품은 크기, 가죽, 디자인 디테일에 따라 가격이 달라질 수 있습니다.<br>
+                입금 후 제작에 들어가며 평균 3주 소요됩니다.
+            </p>
+            <hr>
+        </section>
+
+        <!-- 주문 정보 섹션 -->
+        <section class="order-container">
+            <div class="product-image">
+                <img src="{{ url_for('static', filename=product.image_path) }}" alt="{{ product.name }}">
+                <h3>{{ product.name }} ({{ product.model }})</h3>
+            </div>
+
+            <!-- 주문 폼 -->
+            <div class="order-form">
+                <form method="POST" action="{{ url_for('submit_order') }}">
+                    <!-- Hidden input으로 product id(model) 전송 -->
+                    <input type="hidden" name="product_id" value="{{ product.model }}">
+
+                    <!-- 주문 정보 -->
+                    <fieldset>
+                        <legend>주문 정보</legend>
+                        <label>사용자:</label>
+                        <input type="text" name="user_description" placeholder="누가 사용하는지 설명해주세요. ex) 성별, 연령대, 직업, 취향 등" required>
+
+                        <label>크기:</label>
+                        <input type="text" name="size" placeholder="원하는 크기를 설명해주세요. ex) 가로*세로*높이 등" required>
+
+                        <label>색상:</label>
+                        <input type="text" name="color" placeholder="원하는 색을 입력해주세요">
+
+                        <label>가죽:</label>
+                        <input type="text" name="leather" placeholder="원하는 가죽을 입력해주세요. ex) 딱딱한 가죽, 부드러운 가죽 등">
+
+                        <label>형태:</label>
+                        <input type="text" name="shape" placeholder="원하는 형태를 입력해주세요. ex) 부드러운 형태, 형태 유지 등">
+
+                        <label>기타 요구사항:</label>
+                        <textarea name="additional_requests" placeholder="기타 원하시는 내용 ex) 가볍게, 어깨끈 필수 등"></textarea>
+                    </fieldset>
+
+                    <hr class="order-divider">
+
+                    <!-- 연락처 정보 -->
+                    <fieldset>
+                        <legend>연락처</legend>
+                        <label>성함:</label>
+                        <input type="text" name="name" placeholder="주문자 성함을 입력해주세요" required>
+
+                        <label>전화번호:</label>
+                        <input type="text" name="phone" placeholder="연락받을 번호를 입력해주세요" required>
+
+                        <label>이메일:</label>
+                        <input type="email" name="email" placeholder="견적서와 주문확인 메일을 받을 곳을 입력해주세요" required>
+                    </fieldset>
+
+                    <!-- 예상 금액 -->
+                    <p class="estimate">예상 금액: {{ product.price }}</p>
+
+                    <!-- 주문 제출 버튼 -->
+                    <div class="send-order-container">
+                        <button type="submit" class="order-button">Send Order</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- 하단 설명 -->
+        <hr class="footer-divider">
+        <div class="footer-text">
+            접수 후 1-2일 안에 연락드립니다. <br>
+            주문 제품의 가죽, 크기, 세부 디자인 등을 협의하고 그에 따른 견적서를 보내드립니다. <br>
+            결제는 계좌이체만 가능하며 현금영수증 또는 세금계산서(VAT 별도)를 발행하여 드립니다. <br>
+        </div>
+    </main>
+</body>
+</html>

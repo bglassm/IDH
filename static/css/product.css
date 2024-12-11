@@ -1,0 +1,95 @@
+.product-page {
+    display: flex;
+    justify-content: space-between; /* 콘텐츠 간격을 조정 */
+    padding: 20px;
+    margin-top: 250px; /* 헤더 높이만큼 여백 */
+    max-width: 1200px; /* 최대 너비 제한 */
+    margin-left: auto; /* 페이지를 중앙 정렬 */
+    margin-right: auto;
+}
+
+.product-images {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-image img {
+    width: 100%; /* 부모 컨테이너의 크기에 맞춤 */
+    max-width: 400px; /* 최대 너비 제한 */
+    aspect-ratio: 3 / 4; /* 3:4 비율로 고정 */
+    height: auto; /* 자동 높이 조정 */
+    object-fit: cover; /* 이미지 비율에 맞게 자르기 */
+    border: 2px solid #ddd;
+}
+
+.thumbnail-images {
+    display: grid; /* 그리드 레이아웃으로 변경 */
+    grid-template-columns: repeat(4, 1fr); /* 최대 4개씩 한 행 */
+    grid-gap: 10px; /* 썸네일 간 간격 */
+    margin-top: 10px;
+}
+
+.thumbnail-images img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border 0.3s;
+}
+
+.thumbnail-images img.active {
+    border: 2px solid #333;
+}
+
+.product-details {
+    flex: 1;
+    padding-left: 40px; /* 오른쪽 정보와의 간격을 설정 */
+}
+
+.product-details h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.product-details .price {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.product-details .description {
+    margin-top: 10px;
+    line-height: 1.6;
+    
+}
+
+.quantity {
+    margin: 20px 0;
+}
+
+.quantity input {
+    width: 50px;
+    margin-left: 10px;
+}
+
+.buttons a {
+    display: inline-block; /* 버튼처럼 보이도록 설정 */
+    font-size: 20px;
+    padding: 15px 25px;
+    background-color: #8b5e34;
+    color: white;
+    border: none;
+    border-radius: 35px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none; /* 링크 밑줄 제거 */
+    margin-right: 10px;
+}
+
+.buttons a:hover {
+    background-color: #6b4227;
+}
+

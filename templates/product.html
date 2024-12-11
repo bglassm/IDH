@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }} - Individual by Hand</title>
+    <!-- CSS 파일 로드 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/product.css') }}">
+</head>
+<body>
+    <header>
+        <!-- 로고 -->
+        <div class="logo">
+            <a href="{{ url_for('home') }}">
+                <img 
+                    src="{{ url_for('static', filename='images/ih_logo.png') }}" 
+                    alt="Individual by Hand Logo" 
+                    class="logo-img">
+            </a>
+        </div>
+        <!-- 네비게이션 -->
+        <nav>
+            <ul>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <!-- Order 버튼 -->
+        <a href="{{ url_for('show_products', category='all') }}" class="order-button">Order</a>
+    </header>
+    
+    <!-- 상품 상세 페이지 -->
+    <div class="product-page">
+        <!-- 좌측 이미지 영역 -->
+        <div class="product-images">
+            <!-- 메인 이미지 -->
+            <div class="main-image">
+                <img id="large-image" src="{{ url_for('static', filename=product.images[0].replace('static/', '')) }}" alt="Product Image">
+            </div>
+        
+            <!-- 썸네일 이미지 -->
+            <div class="thumbnail-images">
+                {% for image in product.images %}
+                <img src="{{ url_for('static', filename=image.replace('static/', '')) }}" 
+                     class="thumbnail {% if loop.index0 == 0 %}active{% endif %}" 
+                     alt="Thumbnail">
+                {% endfor %}
+            </div>
+        </div>
+                      
+        <!-- 우측 상세정보 영역 -->
+        <div class="product-details">
+            <h1>{{ product.name }} ({{ product.model }})</h1>
+            <p class="price">{{ product.price }}</p>
+            <p class="size">Size: {{ product.size }}</p>
+            <p class="leather">Leather: {{ product.leather }}</p>
+            <p class="description">
+                {% for line in product.description.split('.') %}
+                {{ line.strip() }}<br>
+                {% endfor %}
+            </p>
+            <div class="quantity">
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" value="1" min="1">
+            </div>
+            <div class="buttons">
+                <!-- Order 버튼 -->
+                <a href="{{ url_for('order_page', model=product.model) }}" class="order-button">Order</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS 파일 로드 -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

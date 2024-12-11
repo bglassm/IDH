@@ -1,0 +1,108 @@
+.product-list-section {
+    padding: 100px 40px;
+    text-align: center;
+    background-color: white;
+    margin-top: 120px;
+    position: relative;
+}
+
+/* 카테고리와 카드 사이 얇은 선 및 간격 */
+.product-list-section h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.product-list-section h1::after {
+    content: "";
+    display: block;
+    width: 80%;
+    height: 2px;
+    background-color: #ddd; /* 얇은 선 색상 */
+    margin: 20px auto 60px; /* 하단 간격 조정 (기존보다 늘림) */
+}
+
+/* 제품 리스트 */
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* 크기 조정 */
+    gap: 50px; /* 카드 사이 간격 증가 */
+    padding: 0;
+    list-style: none;
+    margin: 0;
+}
+
+/* 제품 카드 */
+.product-list-item {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s;
+    text-align: center;
+    height: 480px; /* 카드 높이 조정 */
+    display: flex;
+    flex-direction: column;
+}
+
+/* 이미지 3:4 비율 및 크기 */
+.product-list-item img {
+    width: 100%;
+    height: auto; /* 이미지 비율 유지 */
+    aspect-ratio: 3 / 4; /* 3:4 비율 고정 */
+    object-fit: cover;
+    max-height: 380px; /* 이미지가 카드에서 차지하는 최대 높이 */
+    transition: transform 0.3s ease-in-out;
+}
+
+/* 호버 시 이미지 확대 */
+.product-list-item:hover img {
+    transform: scale(1.05);
+}
+
+/* 텍스트 영역 */
+.product-list-item h3 {
+    font-size: 18px; /* 제목 글씨 크기 축소 */
+    margin: 10px 0 5px; /* 여백 축소 */
+    color: #333;
+    white-space: nowrap; /* 글이 한 줄로 나오게 처리 */
+    overflow: hidden;
+    text-overflow: ellipsis; /* 글이 길 경우 말줄임표 처리 */
+}
+
+.product-list-item p {
+    font-size: 16px; /* 가격 글씨 크기 축소 */
+    margin: 0 0 10px; /* 여백 축소 */
+    color: #777;
+}
+
+/* 텍스트와 이미지 비율 조정 */
+.product-list-item a {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    text-decoration: none; /* 밑줄 제거 */
+    color: inherit; /* 부모의 색상 상속 */
+    padding: 5px; /* 텍스트 주변 최소 여백 */
+}
+
+
+/* 하이퍼링크 스타일 제거 */
+.product-list-item a {
+    text-decoration: none; /* 밑줄 제거 */
+    color: inherit; /* 부모의 색상 상속 */
+}
+
+/* 제목 스타일 */
+.product-list-item h3 {
+    font-size: 20px;
+    margin: 15px 0 10px;
+    color: #333;
+}
+
+/* 가격 스타일 */
+.product-list-item p {
+    font-size: 18px;
+    margin: 0 0 15px;
+    color: #777;
+}
