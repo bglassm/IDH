@@ -13,23 +13,6 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row  # 결과를 딕셔너리 형태로 반환
     return conn
 
-#Contact 기능
-from flask import Flask, render_template, request, flash, redirect, url_for
-import sqlite3
-import re
-import boto3
-from botocore.exceptions import ClientError
-import os
-
-app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Flash 메시지 활성화
-
-# 데이터베이스 연결 함수
-def get_db_connection():
-    conn = sqlite3.connect('individual_by_hand.db')
-    conn.row_factory = sqlite3.Row  # 결과를 딕셔너리 형태로 반환
-    return conn
-
 # Contact 제출 처리
 @app.route('/contact_submit', methods=['POST'])
 def contact_submit():
@@ -241,7 +224,60 @@ def submit_order():
     created_at = datetime.now().strftime('%Y%m%d')  # 날짜: YYYYMMDD 형식
     order_number = f"{created_at}815{order_id}"
 
-    # 이메일 전송 (주석 처리)
+    # 제작자에게 전송할 이메일 내용
+    admin_email_body = f"""
+    새로운 주문이 접수되었습니다:
+
+    - 주문번호: {order_number}
+    - 이름: {data['name']}
+    - 전화번호: {data['phone']}
+    - 이메일: {data['email']}
+    - 사용자 설명: {data['user_description']}
+    - 크기: {data['size']}
+    - 색상: {data.get('color', 'N/A')}
+    - 형태: {data.get('shape', 'N/A')}
+    - 가죽: {data.get('leather', 'N/A')}
+    - 추가 요청사항: {data.get('additional_requests', 'N/A')}
+    """
+
+    # 주문자에게 전송할 이메일 내용
+    customer_email_body = f"""
+    감사합니다! 주문이 접수되었습니다.
+
+    고객님의 주문 정보는 다음과 같습니다:
+    - 주문번호: {order_number}
+    - 사용자 설명: {data['user_description']}
+    - 크기: {data['size']}
+    - 색상: {data.get('color', 'N/A')}
+    - 형태: {data.get('shape', 'N/A')}
+    - 가죽: {data.get('leather', 'N/A')}
+    - 추가 요청사항: {data.get('additional_requests', 'N/A')}
+
+    안내사항:
+    - 고객님의 요청에 따라 곧 협의를 위해 1-2일 내로 연락드리겠습니다.
+    - 새로 제작되는 제품은 크기, 가죽, 디자인 디테일에 따라 가격이 달라질 수 있습니다.
+    - 결제 후 제작이 시작되며 평균 2~3주 정도 소요됩니다.
+
+    ----
+
+    Thank you for your order. Below is the order summary:
+
+    - Order Number: {order_number}
+    - User Description: {data['user_description']}
+    - Size: {data['size']}
+    - Color: {data.get('color', 'N/A')}
+    - Shape: {data.get('shape', 'N/A')}
+    - Leather: {data.get('leather', 'N/A')}
+    - Additional Requests: {data.get('additional_requests', 'N/A')}
+
+    Notes:
+    - We will contact you within 1-2 days to discuss your request further.
+    - The price may vary depending on size, leather type, and design details.
+    - Production begins after payment and typically takes 2-3 weeks to complete.
+    """
+
+    # 이메일 전송 (AWS SES)
+    # 주석 해제 시 이메일 전송 가능
     # ses_client = boto3.client(
     #     'ses',
     #     region_name='ap-northeast-2',
@@ -249,12 +285,22 @@ def submit_order():
     #     aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY')
     # )
     # try:
+    #     # 제작자에게 이메일 전송
+    #     ses_client.send_email(
+    #         Source='your_verified_email@example.com',
+    #         Destination={'ToAddresses': ['individualbyhand@gmail.com']},
+    #         Message={
+    #             'Subject': {'Data': 'New Order Received'},
+    #             'Body': {'Text': {'Data': admin_email_body}}
+    #         }
+    #     )
+    #     # 주문자에게 이메일 전송
     #     ses_client.send_email(
     #         Source='your_verified_email@example.com',
     #         Destination={'ToAddresses': [data['email']]},
     #         Message={
     #             'Subject': {'Data': 'Order Confirmation'},
-    #             'Body': {'Text': {'Data': f"Thank you for your order, {data['name']}!"}}
+    #             'Body': {'Text': {'Data': customer_email_body}}
     #         }
     #     )
     # except ClientError as e:
@@ -269,6 +315,7 @@ def submit_order():
         phone=data['phone'],
         email=data['email']
     )
+
 
 
 # 메인 페이지
