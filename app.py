@@ -1,16 +1,18 @@
+import os
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 from flask import Flask, render_template, request, flash, redirect, url_for
 import sqlite3
 import re
-import boto3
-from botocore.exceptions import ClientError
-from dotenv import load_dotenv  # 추가된 부분
-import os
+from datetime import datetime
+from dotenv import load_dotenv
 
-# .env 파일 로드
-load_dotenv()  # .env 파일을 읽어 환경 변수 설정
+# Load environment variables
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Flash 메시지 활성화
+app.secret_key = 'your_secret_key'  # Flask 메시지 활성화
 
 # 데이터베이스 연결 함수
 def get_db_connection():
@@ -18,12 +20,30 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row  # 결과를 딕셔너리 형태로 반환
     return conn
 
-# AWS SES 클라이언트 생성 전 환경 변수 확인
-AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+# Gmail SMTP 설정
+GMAIL_EMAIL = os.getenv("GMAIL_EMAIL")  # Gmail 주소
+GMAIL_PASSWORD = os.getenv("GMAIL_PASSWORD")  # Gmail 앱 비밀번호
 
-if not AWS_ACCESS_KEY_ID or not AWS_SECRET_ACCESS_KEY:
-    raise ValueError("AWS Access Key ID 또는 Secret Access Key가 설정되지 않았습니다. 환경 변수를 확인해주세요.")
+# Gmail을 이용해 메일 전송 함수
+def send_email(to_email, subject, body):
+    try:
+        # 이메일 생성
+        msg = MIMEMultipart()
+        msg['From'] = GMAIL_EMAIL
+        msg['To'] = to_email
+        msg['Subject'] = subject
+
+        # 메일 본문 설정
+        msg.attach(MIMEText(body, 'plain'))
+
+        # Gmail SMTP 서버 연결 및 메일 전송
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
+            server.login(GMAIL_EMAIL, GMAIL_PASSWORD)
+            server.sendmail(GMAIL_EMAIL, to_email, msg.as_string())
+
+        print(f"Email sent successfully to {to_email}")
+    except Exception as e:
+        print(f"Failed to send email to {to_email}: {str(e)}")
 
 # Contact 제출 처리
 @app.route('/contact_submit', methods=['POST'])
@@ -61,34 +81,20 @@ def contact_submit():
         finally:
             conn.close()
 
-        # 이메일 전송 (AWS SES)
-        ses_client = boto3.client(
-            'ses',
-            region_name='ap-northeast-2',
-            aws_access_key_id=AWS_ACCESS_KEY_ID,
-            aws_secret_access_key=AWS_SECRET_ACCESS_KEY
-        )
+        # 이메일 전송 (Gmail SMTP)
+        admin_email_body = f"""
+        새로운 문의가 접수되었습니다:
+
+        - 이름: {data['first_name']} {data['last_name']}
+        - 이메일: {data['email']}
+        - 메시지:
+        {data['message']}
+        """
         try:
-            ses_client.send_email(
-                Source='individualbyhand@gmail.com',
-                Destination={'ToAddresses': ['individualbyhand@gmail.com']},  # 관리자가 받을 이메일
-                Message={
-                    'Subject': {'Data': 'New Contact Form Submission'},
-                    'Body': {
-                        'Text': {
-                            'Data': (
-                                f"New Contact Form Submission\n\n"
-                                f"Name: {data['first_name']} {data['last_name']}\n"
-                                f"Email: {data['email']}\n"
-                                f"Message:\n{data['message']}"
-                            )
-                        }
-                    }
-                }
-            )
+            send_email('individualbyhand@gmail.com', "New Contact Form Submission", admin_email_body)
             flash("메시지가 성공적으로 전송되었습니다! 빠른 시일 내에 답변드리겠습니다.", "success")
-        except ClientError as e:
-            flash(f"메일 전송에 실패했습니다: {e.response['Error']['Message']}", "error")
+        except Exception as e:
+            flash(f"메일 전송에 실패했습니다: {str(e)}", "error")
             return redirect(url_for('home') + "#contact")
 
         # 성공 시 Contact 섹션으로 리디렉션
@@ -223,8 +229,7 @@ def submit_order():
     finally:
         conn.close()
 
-    # 주문번호 생성: created_at + "815" + order_id
-    from datetime import datetime
+    # 주문번호 생성
     created_at = datetime.now().strftime('%Y%m%d')  # 날짜: YYYYMMDD 형식
     order_number = f"{created_at}815{order_id}"
 
@@ -280,36 +285,9 @@ def submit_order():
     - Production begins after payment and typically takes 2-3 weeks to complete.
     """
 
-    # 이메일 전송 (AWS SES)
-    # 주석 해제 시 이메일 전송 가능
-    ses_client = boto3.client(
-         'ses',
-         region_name='ap-northeast-2',
-         aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
-         aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY')
-     )
-    try:
-         # 제작자에게 이메일 전송
-         ses_client.send_email(
-             Source='individualbyhand@gmail.com',
-             Destination={'ToAddresses': ['individualbyhand@gmail.com']},
-             Message={
-                 'Subject': {'Data': 'New Order Received'},
-                 'Body': {'Text': {'Data': admin_email_body}}
-             }
-         )
-         # 주문자에게 이메일 전송
-         ses_client.send_email(
-             Source='individualbyhand@gmail.com',
-             Destination={'ToAddresses': [data['email']]},
-             Message={
-                 'Subject': {'Data': 'Order Confirmation'},
-                 'Body': {'Text': {'Data': customer_email_body}}
-             }
-         )
-    except ClientError as e:
-         flash(f"Error sending email: {e.response['Error']['Message']}", "error")
-         return redirect(request.referrer)
+    # 이메일 전송
+    send_email('individualbyhand@gmail.com', "New Order Received", admin_email_body)
+    send_email(data['email'], "Order Confirmation", customer_email_body)
 
     # 주문 완료 페이지로 리디렉션
     return render_template(
@@ -319,7 +297,6 @@ def submit_order():
         phone=data['phone'],
         email=data['email']
     )
-
 
 # 메인 페이지
 @app.route('/')
