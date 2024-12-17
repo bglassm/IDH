@@ -1,8 +1,9 @@
 from flask import Flask, render_template, request, flash, redirect, url_for
 import sqlite3
 import re
-# import boto3
-# from botocore.exceptions import ClientError
+import boto3
+from botocore.exceptions import ClientError
+import os
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Flash 메시지 활성화
@@ -12,6 +13,13 @@ def get_db_connection():
     conn = sqlite3.connect('individual_by_hand.db')
     conn.row_factory = sqlite3.Row  # 결과를 딕셔너리 형태로 반환
     return conn
+
+# AWS SES 클라이언트 생성 전 환경 변수 확인
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+
+if not AWS_ACCESS_KEY_ID or not AWS_SECRET_ACCESS_KEY:
+    raise ValueError("AWS Access Key ID 또는 Secret Access Key가 설정되지 않았습니다. 환경 변수를 확인해주세요.")
 
 # Contact 제출 처리
 @app.route('/contact_submit', methods=['POST'])
@@ -58,8 +66,8 @@ def contact_submit():
         )
         try:
             ses_client.send_email(
-                Source='your_verified_email@example.com',
-                Destination={'ToAddresses': ['your_verified_email@example.com']},  # 관리자가 받을 이메일
+                Source='individualbyhand@gmail.com',
+                Destination={'ToAddresses': ['individualbyhand@gmail.com']},  # 관리자가 받을 이메일
                 Message={
                     'Subject': {'Data': 'New Contact Form Submission'},
                     'Body': {
@@ -82,13 +90,6 @@ def contact_submit():
         # 성공 시 Contact 섹션으로 리디렉션
         return redirect(url_for('home') + "#contact")
 
-# 메인 페이지
-@app.route('/')
-def home():
-    return render_template('main.html')
-
-if __name__ == '__main__':
-    app.run(debug=True)
 
 # 특정 카테고리의 제품을 렌더링
 @app.route('/products/<category>')
@@ -278,34 +279,34 @@ def submit_order():
 
     # 이메일 전송 (AWS SES)
     # 주석 해제 시 이메일 전송 가능
-    # ses_client = boto3.client(
-    #     'ses',
-    #     region_name='ap-northeast-2',
-    #     aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
-    #     aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY')
-    # )
-    # try:
-    #     # 제작자에게 이메일 전송
-    #     ses_client.send_email(
-    #         Source='your_verified_email@example.com',
-    #         Destination={'ToAddresses': ['individualbyhand@gmail.com']},
-    #         Message={
-    #             'Subject': {'Data': 'New Order Received'},
-    #             'Body': {'Text': {'Data': admin_email_body}}
-    #         }
-    #     )
-    #     # 주문자에게 이메일 전송
-    #     ses_client.send_email(
-    #         Source='your_verified_email@example.com',
-    #         Destination={'ToAddresses': [data['email']]},
-    #         Message={
-    #             'Subject': {'Data': 'Order Confirmation'},
-    #             'Body': {'Text': {'Data': customer_email_body}}
-    #         }
-    #     )
-    # except ClientError as e:
-    #     flash(f"Error sending email: {e.response['Error']['Message']}", "error")
-    #     return redirect(request.referrer)
+    ses_client = boto3.client(
+         'ses',
+         region_name='ap-northeast-2',
+         aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
+         aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY')
+     )
+    try:
+         # 제작자에게 이메일 전송
+         ses_client.send_email(
+             Source='individualbyhand@gmail.com',
+             Destination={'ToAddresses': ['individualbyhand@gmail.com']},
+             Message={
+                 'Subject': {'Data': 'New Order Received'},
+                 'Body': {'Text': {'Data': admin_email_body}}
+             }
+         )
+         # 주문자에게 이메일 전송
+         ses_client.send_email(
+             Source='individualbyhand@gmail.com',
+             Destination={'ToAddresses': [data['email']]},
+             Message={
+                 'Subject': {'Data': 'Order Confirmation'},
+                 'Body': {'Text': {'Data': customer_email_body}}
+             }
+         )
+     except ClientError as e:
+         flash(f"Error sending email: {e.response['Error']['Message']}", "error")
+         return redirect(request.referrer)
 
     # 주문 완료 페이지로 리디렉션
     return render_template(
@@ -315,7 +316,6 @@ def submit_order():
         phone=data['phone'],
         email=data['email']
     )
-
 
 
 # 메인 페이지
