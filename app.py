@@ -3,7 +3,11 @@ import sqlite3
 import re
 import boto3
 from botocore.exceptions import ClientError
+from dotenv import load_dotenv  # 추가된 부분
 import os
+
+# .env 파일 로드
+load_dotenv()  # .env 파일을 읽어 환경 변수 설정
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Flash 메시지 활성화
@@ -61,8 +65,8 @@ def contact_submit():
         ses_client = boto3.client(
             'ses',
             region_name='ap-northeast-2',
-            aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
-            aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY')
+            aws_access_key_id=AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY
         )
         try:
             ses_client.send_email(
@@ -89,7 +93,6 @@ def contact_submit():
 
         # 성공 시 Contact 섹션으로 리디렉션
         return redirect(url_for('home') + "#contact")
-
 
 # 특정 카테고리의 제품을 렌더링
 @app.route('/products/<category>')
