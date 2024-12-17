@@ -304,7 +304,7 @@ def submit_order():
                  'Body': {'Text': {'Data': customer_email_body}}
              }
          )
-     except ClientError as e:
+    except ClientError as e:
          flash(f"Error sending email: {e.response['Error']['Message']}", "error")
          return redirect(request.referrer)
 
