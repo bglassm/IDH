@@ -262,15 +262,9 @@ def submit_order():
     - 가죽: {data.get('leather', 'N/A')}
     - 추가 요청사항: {data.get('additional_requests', 'N/A')}
 
-    안내사항:
-    - 고객님의 요청에 따라 곧 협의를 위해 1-2일 내로 연락드리겠습니다.
-    - 새로 제작되는 제품은 크기, 가죽, 디자인 디테일에 따라 가격이 달라질 수 있습니다.
-    - 결제 후 제작이 시작되며 평균 2~3주 정도 소요됩니다.
+    Thank you! Your order has been received.
 
-    ----
-
-    Thank you for your order. Below is the order summary:
-
+    Below is your order information:
     - Order Number: {order_number}
     - User Description: {data['user_description']}
     - Size: {data['size']}
@@ -278,11 +272,6 @@ def submit_order():
     - Shape: {data.get('shape', 'N/A')}
     - Leather: {data.get('leather', 'N/A')}
     - Additional Requests: {data.get('additional_requests', 'N/A')}
-
-    Notes:
-    - We will contact you within 1-2 days to discuss your request further.
-    - The price may vary depending on size, leather type, and design details.
-    - Production begins after payment and typically takes 2-3 weeks to complete.
     """
 
     # 이메일 전송
