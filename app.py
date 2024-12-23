@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Flask 메시지 활성화
+app.secret_key = os.getenv("SECRET_KEY")  # Flask 메시지 활성화
 
 # 데이터베이스 연결 함수
 def get_db_connection():
