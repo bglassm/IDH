@@ -13,6 +13,7 @@
     background-position: center;
     background-repeat: no-repeat; /* 이미지 반복 방지 */
     background-position: center; /* 이미지를 중앙에 맞춤 */
+    margin-top: 80px;
 }
 
 .main-banner h1 {
