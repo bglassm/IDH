@@ -12,7 +12,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 60px 100px; /* 패딩을 줄여 높이를 조정 */
+    padding: 60px 100px;
     background-color: white;
     box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.15);
     position: fixed;

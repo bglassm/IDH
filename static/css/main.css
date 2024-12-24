@@ -351,8 +351,8 @@
 @media (max-width: 768px) {
     /* Main Banner */
     .main-banner {
-        height: 250px; /* 배너 높이를 줄임 */
-        background-size: 120%; /* 이미지를 더 적절히 표시 */
+        height: 230px; /* 배너 높이를 줄임 */
+        background-size: 140%; /* 이미지를 더 적절히 표시 */
     }
     .main-banner h1 {
         font-size: 24px; /* 글자 크기를 줄임 */
