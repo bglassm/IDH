@@ -11,6 +11,8 @@
     padding: 20px;
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat; /* 이미지 반복 방지 */
+    background-position: center; /* 이미지를 중앙에 맞춤 */
 }
 
 .main-banner h1 {
@@ -172,6 +174,9 @@
     background-color: #8b5e34;
 }
 
+
+
+
 /* 6. 반응형 디자인 */
 @media (max-width: 768px) {
     .product-card {
@@ -310,11 +315,43 @@
     background-color: #6b4227;
 }
 
+/* contact form */
+.contact-form {
+    display: flex;
+    flex-wrap: wrap; /* 필드가 작은 화면에서 줄바꿈되도록 설정 */
+    gap: 10px; /* 필드 간격 설정 */
+}
+
+.name-fields {
+    display: flex;
+    flex-wrap: wrap; /* 이름 필드가 작은 화면에서 줄바꿈되도록 설정 */
+    gap: 10px; /* 이름과 성 필드 사이 간격 */
+}
+
+.name-fields input {
+    flex: 1; /* 이름과 성 필드가 동일한 너비를 차지하도록 설정 */
+    min-width: calc(50% - 10px); /* 최소 너비 설정 */
+    box-sizing: border-box; /* padding과 border 포함 */
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%; /* 입력 필드가 부모 요소에 맞게 확장 */
+    max-width: 100%; /* 최대 너비 제한 */
+    box-sizing: border-box; /* padding 포함 */
+}
+
+.contact-form button {
+    width: 100%; /* 버튼이 부모 요소에 맞게 확장 */
+    max-width: 100%; /* 최대 너비 제한 */
+}
+
+
 @media (max-width: 768px) {
     /* Main Banner */
     .main-banner {
-        height: 400px; /* 배너 높이를 줄임 */
-        background-size: contain; /* 이미지를 더 적절히 표시 */
+        height: 250px; /* 배너 높이를 줄임 */
+        background-size: 120%; /* 이미지를 더 적절히 표시 */
     }
     .main-banner h1 {
         font-size: 24px; /* 글자 크기를 줄임 */

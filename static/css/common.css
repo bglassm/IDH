@@ -12,7 +12,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 60px 100px;
+    padding: 60px 100px; /* 패딩을 줄여 높이를 조정 */
     background-color: white;
     box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.15);
     position: fixed;
@@ -20,6 +20,7 @@ header {
     top: 0;
     z-index: 1000;
     box-sizing: border-box;
+    height: 80px; /* 헤더 높이를 고정 */
 }
 
 header nav {
