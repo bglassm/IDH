@@ -309,3 +309,43 @@
 .send-button:hover {
     background-color: #6b4227;
 }
+
+@media (max-width: 768px) {
+    /* Main Banner */
+    .main-banner {
+        height: 400px; /* 배너 높이를 줄임 */
+        background-size: contain; /* 이미지를 더 적절히 표시 */
+    }
+    .main-banner h1 {
+        font-size: 24px; /* 글자 크기를 줄임 */
+        padding: 10px; /* 텍스트 패딩 조정 */
+    }
+
+    /* Product Cards */
+    .product-cards {
+        grid-template-columns: repeat(2, 1fr); /* 가로 2개로 배치 */
+    }
+    .product-card {
+        width: 100%; /* 카드 크기를 유동적으로 조정 */
+        height: auto; /* 고정 높이 제거 */
+    }
+    .product-card img {
+        width: 100%; /* 이미지 크기 조정 */
+        height: auto;
+    }
+
+    /* Contact Section */
+    .contact-container {
+        flex-direction: column; /* 상하 배치로 변경 */
+        gap: 20px; /* 간격 조정 */
+    }
+    .contact-description, .contact-form {
+        max-width: 100%; /* 양쪽 크기 제한 제거 */
+    }
+}
+
+@media (max-width: 480px) {
+    .product-cards {
+        grid-template-columns: 1fr; /* 가로 1개로 배치 */
+    }
+}
